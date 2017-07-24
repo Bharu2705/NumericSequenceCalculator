@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+
+
+<body>
+    <div class="modal w3-animate-opacity" style="padding-top: 100px; position: fixed; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4)" id="myModal">
+        <div class="w3-modal-content w3-card-4">
+            <header class="w3-container w3-teal">
+                <span onclick="document.getElementById('myModal').style.display = 'none'"
+                      class="w3-button w3-display-topright" data-dismiss="modal">&times;</span>
+                <h2>Instructions</h2>
+            </header>
+            <div class="w3-container">
+                <p>Please enter a number to initiate the calculation of a few numeric sequences</p>
+                <p>The following sequences will be generated: </p>
+                <ul style="font-size:12px">
+                    <li><p>All numbers up to and including the number entered </p></li>
+                    <li><p>All odd numbers up to and including the number entered </p></li>
+                    <li><p>All even numbers up to and including the number entered </p></li>
+                    <li><p>When a number is a multiple of 3, you see the output 'C' </p></li>
+                    <li><p>When a number is a multiple of 5, you see the output 'E' </p></li>
+                    <li><p>When a number is a multiple of both 3 & 5, you see the output 'Z </p></li>
+                    <li><p>All fibonacci numbers up to and including the number entered </p></li>
+                </ul>
+            </div>
+            <footer class="w3-container w3-teal">
+                <p></p>
+            </footer>
+        </div>
+    </div>
+    <h2>Numeric Sequence Generator</h2>
+    <hr />
+    <div ng-controller="IndexController">
+        <dialog id="myDialog">This is a dialog window</dialog>
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <h2>Enter a number</h2>
+                <br />
+                <p class="text-center">You entered <span ng-cloak>{{number}}</span></p>
+                <form name="form" ng-submit="form.$valid && generateSequences()" novalidate class="form-inline text-center" ng-cloak>
+                    <div class="form-group">
+                        <label class="sr-only">Enter a number</label>
+                        <input type="number" ng-model="number" ng-pattern="/^[0-9]+$/" required name="number" class="form-control" placeholder="Enter a number" />
+                    </div>
+                    <input id="calculateBtn" type="submit" value="Generate Sequences" class="btn btn-primary" />
+                    <div ng-messages="form.number.$error" ng-show="form.number.$dirty && form.number.$invalid" class="text-danger" role="alert">
+                        <p ng-message="pattern">You can enter positive whole numbers only</p>
+                    </div>
+                </form>
+                <br />
+                <result message="message"></result>
+                <br />
+                <h4>Calculating sequences....</h4>
+                <p>The following numeric sequences shall be displayed</p>
+                <br />
+                <ul class="list-group" ng-cloak>
+                    <li class="list-group-item">
+                        <h4 class="list-group-item-heading">All Numbers Sequence</h4>
+                        <p>Sequence of all numbers up to and including the number entered</p>
+                        <span ng-repeat="item in sequences.all" class="h-xs">{{item}}</span>
+                    </li>
+                    <li class="list-group-item">
+                        <h4 class="list-group-item-heading">Odd Numbers Sequence</h4>
+                        <p>Sequence of all odd numbers up to and including the number entered</p>
+                        <span ng-repeat="item in sequences.odd" class="h-xs">{{item}}</span>
+                    </li>
+                    <li class="list-group-item">
+                        <h4 class="list-group-item-heading">Even Numbers Sequence</h4>
+                        <p>Sequence of all even numbers up to and including the number entered</p>
+                        <span ng-repeat="item in sequences.even" class="h-xs">{{item}}</span>
+                    </li>
+                    <li class="list-group-item">
+                        <h4 class="list-group-item-heading">Conditional Numbers Sequence</h4>
+                        <p>
+                            Result of numbers up to and including the number entered, except when
+                            <ul>
+                                <li>If the number is a multiple of 3, the output is C</li>
+                                <li>If the number is a multiple of 5, the output is E</li>
+                                <li>If the number is a multiple of both 3 and 5, the output is Z</li>
+                            </ul>
+                        </p>
+                        <span ng-repeat="item in sequences.conditional" class="h-xs">{{item}}</span>
+                    </li>
+                    <li class="list-group-item">
+                        <h4 class="list-group-item-heading">Fibonacci Numbers Sequence</h4>
+                        <p>Sequence of all fibonacci number up to and including the number entered</p>
+                        <span ng-repeat="item in sequences.fibonacci track by $index" class="h-xs">{{item}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+@section scripts{
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+     <link rel="stylesheet" href="~/Content/Modal.css">
+
+
+    <script src="~/js/home/indexController.js"></script>
+    <script type="text/javascript">
+        $(window).on('load', function () {
+            $('#myModal').modal('show');
+        });
+    </script>
+
+}
+
+
